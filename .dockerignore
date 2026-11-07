@@ -1,0 +1,15 @@
+# 绝不打入镜像的敏感与冗余文件
+.env
+.env.*
+*.key
+*.pem
+
+# 依赖与版本控制（镜像内重新安装）
+node_modules
+.git
+.gitignore
+
+# 本地脚本与临时文件
+*.bat
+*.log
+tmp/

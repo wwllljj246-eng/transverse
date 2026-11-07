@@ -1,9 +1,23 @@
 /* ============================================================
    翻译数据层
-   - realTranslate：优先调用后端 POST /api/translate（腾讯云 TMT 代理）
+   - realTranslate：调用后端 POST /api/translate（腾讯云 TMT / MyMemory 双通道）
    - mockTranslate + 短语库：开发 / 后端不可用时的降级备用，完整保留
    注意：密钥只存在于后端（server.js / .env），前端永不接触
+
+   API 基址：
+   - 同源部署（CloudStudio / 本地）：直接用 /api/translate
+   - GitHub Pages（纯静态，无后端）：指向下方 REMOTE_API_BASE
+   - 也可在页面里设置 window.TRANSVERSE_API_BASE 覆盖（自行部署后端时用）
    ============================================================ */
+
+const REMOTE_API_BASE = 'https://e36145bc87da40faa42fbb52ad4d8e43.codebuddy.cloudstudio.run';
+
+function translateEndpoint(path) {
+  const custom = typeof window !== 'undefined' ? window.TRANSVERSE_API_BASE : '';
+  const host = typeof location !== 'undefined' ? location.hostname : '';
+  const base = custom || (host.endsWith('github.io') ? REMOTE_API_BASE : '');
+  return base ? base.replace(/\/$/, '') + path : path;
+}
 
 /** AI 表达模式 */
 export const TONES = [
@@ -125,11 +139,11 @@ export function mockTranslate(input, from, to, tone = 'natural') {
  * @returns {Promise<{ok: boolean, text?: string, message?: string}>}
  *          ok:true  → text 为真实译文；ok:false → message 为失败原因
  */
-export async function realTranslate(input, from, to, timeoutMs = 8000) {
+export async function realTranslate(input, from, to, timeoutMs = 12000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch('/api/translate', {
+    const res = await fetch(translateEndpoint('/api/translate'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: input, from, to }),
