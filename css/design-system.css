@@ -1,0 +1,153 @@
+/* ============================================================
+   译境 TransVerse — Design System
+   关键词：莫兰迪 / 极简 / 高级 / 温和 / 低饱和 / 国际化 / AI 科技感
+
+   强约束（全局生效，任何页面不得绕过令牌写死颜色）：
+   ① 设计基准 375 × 812px，Flex/Grid 响应式适配
+   ② 颜色三色体系：主色 #7C8F9F（灰蓝）+ 辅助色 #A39AA8（灰紫）
+      + 中性色 #F3F0EC（暖灰白）——全部页面共享，禁止新增色相
+   ③ 外框圆角 24px（--radius-outer）
+   ④ 内框圆角 16px（--radius-inner）
+   ⑤ 基础间距单位 8px（只用 8 的倍数）
+   ⑥ 页面左右边距 16px（--page-pad）
+   阴影：轻微柔和（Y4 / Blur16 / 6%~10%），只要层次感不要悬浮感
+   字级：12 / 14 / 16 / 18 / 20 / 24，标题 600
+   使用比例：中性色 ~70% / 主色 ~20% / 辅助色 ~10%
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------- 三色体系 ---------- */
+  --primary: #7C8F9F;             /* 莫兰迪灰蓝：按钮 / 激活态 / 重点图标 / 品牌视觉 */
+  --secondary: #A39AA8;           /* 莫兰迪灰紫：次级强调 / AI 功能 / 少量标签 */
+  --neutral: #F3F0EC;             /* 暖灰白：页面背景 / 大面积留白 */
+
+  /* ---------- 品牌令牌（历史命名，值即三色体系，禁止另取新值） ---------- */
+  --brand-blue: var(--primary);
+  --brand-purple: var(--secondary);
+  /* 不使用大面积渐变：品牌“渐变”一律收敛为单色 */
+  --brand-gradient: #7C8F9F;
+  --brand-gradient-strong: #6E8294;                       /* 主色加深一档 */
+  --brand-gradient-soft: rgba(124, 143, 159, 0.10);       /* 主色低透明度衬底 */
+
+  /* ---------- 语义色（浅色模式）——全部为中性暖灰白体系 ---------- */
+  --bg-page: #F3F0EC;             /* 页面背景：暖灰白 */
+  --bg-card: #FFFFFF;             /* 卡片背景：白 */
+  --bg-elevated: #FFFFFF;
+  --bg-hover: rgba(124, 143, 159, 0.08);
+  --bg-icon-tint: rgba(124, 143, 159, 0.12);
+
+  --text-primary: #3F4145;        /* 主文字：中性深灰 */
+  --text-secondary: #6B6E74;      /* 次级文字（中性系派生） */
+  --text-tertiary: #9A9DA3;       /* 辅助文字（中性系派生） */
+  --text-on-brand: #FFFFFF;
+
+  --accent: var(--primary);
+  --danger: #B0787E;              /* 低饱和玫瑰：仅用于删除/警示，不作装饰 */
+  --badge: #B0787E;
+
+  /* 语义状态色：一律低饱和莫兰迪调，仅作状态标识不作装饰 */
+  --success: #879C87;             /* 灰绿：已完成/转写 */
+  --warning: #AC9C7C;             /* 灰赭：整理摘要 */
+  --star: #B3A583;                /* 灰金：收藏 */
+
+  --divider: rgba(63, 65, 69, 0.08);
+
+  /* ---------- 圆角（全站仅 24 / 16 / 全圆 三种） ---------- */
+  --radius-outer: 24px;           /* 大型功能卡片 / 页面主容器 / 大输入框 / 场景卡片 */
+  --radius-inner: 16px;           /* 小卡片 / 内部按钮 / 输入框内部 / 标签 */
+  --radius-s: 16px;               /* 历史命名 = 内框 */
+  --radius-m: 24px;               /* 历史命名 = 外框 */
+  --radius-l: 24px;               /* 历史命名 = 外框 */
+  --radius-full: 999px;           /* 胶囊 */
+
+  /* ---------- 间距（基础单位 8px，只用倍数） ---------- */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+
+  /* ---------- 柔和阴影（Y4 / Blur16 / 6%~10%） ---------- */
+  --shadow-xs: 0 2px 8px rgba(63, 65, 69, 0.06);
+  --shadow-card: 0 4px 16px rgba(63, 65, 69, 0.08);
+  --shadow-float: 0 4px 16px rgba(63, 65, 69, 0.10);
+  --shadow-brand: 0 4px 16px rgba(124, 143, 159, 0.30);
+  --shadow-nav: 0 -4px 16px rgba(63, 65, 69, 0.06);
+
+  /* ---------- 字体 ---------- */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro SC", "SF Pro Text",
+    "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* ---------- 字号令牌（12/14/16/18/20/24，标题 600）
+     全部通过 --fs-scale 派生，「字体大小」设置只需改这一个变量，
+     正文 / 标题 / 注释会整体等比缩放 */
+  --fs-scale: 1;
+  --fs-caption: calc(12px * var(--fs-scale));   /* 标签 / Caption，500 */
+  --fs-footnote: calc(12px * var(--fs-scale));
+  --fs-body: calc(14px * var(--fs-scale));      /* 辅助文字，400 */
+  --fs-body-l: calc(16px * var(--fs-scale));    /* 正文，400 */
+  --fs-title: calc(18px * var(--fs-scale));     /* 一级重点文字，600 */
+  --fs-headline: calc(20px * var(--fs-scale));  /* 页面标题，600 */
+  --fs-display: calc(24px * var(--fs-scale));
+
+  /* ---------- 布局 ---------- */
+  --app-max-width: 430px;
+  --page-pad: 16px;               /* 375px 基准下左右内容边距 */
+  --nav-height: 62px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* ---------- 动效（缓慢 / 柔和 / 克制） ---------- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.18s;
+  --dur-base: 0.28s;
+  --dur-slow: 0.45s;
+}
+
+/* ============================================================
+   深色模式 — 单一开关：<html data-theme="light|dark">
+   主题在 index.html 的内联引导脚本里于首屏渲染前写入，
+   data/settings.js 负责后续切换（「跟随系统」会先解析成
+   light/dark 再写入属性，并监听系统主题变化）。
+   深色模式不重建品牌色：仍为同一套三色体系，
+   背景换深灰蓝、卡片稍浅深灰、文字浅灰白。
+   ============================================================ */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --neutral: #232830;             /* 深灰蓝背景 */
+  --bg-page: #232830;
+  --bg-card: #2C323C;             /* 稍浅深灰卡片 */
+  --bg-elevated: #333A45;
+  --bg-hover: rgba(124, 143, 159, 0.10);
+  --bg-icon-tint: rgba(124, 143, 159, 0.16);
+  --brand-gradient-soft: rgba(124, 143, 159, 0.14);
+
+  --text-primary: #ECEDF0;        /* 浅灰白 */
+  --text-secondary: #A9AEB6;
+  --text-tertiary: #767C86;
+
+  --divider: rgba(236, 237, 240, 0.08);
+
+  /* 语义状态色在深色下提亮一档，保持低饱和 */
+  --success: #93AC93;
+  --warning: #BCA984;
+  --star: #C0B08C;
+  --danger: #C08890;
+  --badge: #C08890;
+
+  --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.30);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-nav: 0 -4px 16px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .app-shell {
+  box-shadow: 0 0 0 1px var(--divider), 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- 字体大小（设置页「字体大小」） ---------- */
+html[data-font="small"] { --fs-scale: 0.92; }
+html[data-font="large"] { --fs-scale: 1.12; }

@@ -1,0 +1,79 @@
+/* 通知中心 — 全部令牌化，遵循莫兰迪设计系统 */
+
+.notif-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.notif-toolbar .seg-tabs { flex: 1; }
+
+.notif-read-all {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-footnote);
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--bg-icon-tint);
+  transition: opacity var(--dur-fast), transform var(--dur-fast) var(--ease-out);
+}
+.notif-read-all:active { transform: scale(0.94); }
+.notif-read-all.is-disabled { opacity: 0.4; }
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-outer);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+.notif-item:active { transform: scale(0.98); }
+
+.notif-ico {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-inner);
+  background: var(--bg-icon-tint);
+  color: var(--primary);
+}
+.notif-item[data-type="ai"] .notif-ico { color: var(--secondary); }
+
+.notif-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.notif-title { font-size: var(--fs-body-l); font-weight: 650; }
+.notif-body { font-size: var(--fs-body); color: var(--text-secondary); line-height: 1.5; }
+
+.notif-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.notif-time { font-size: var(--fs-caption); color: var(--text-tertiary); }
+.notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--badge); }
+
+/* 未读：轻量提示，不做大面积强调 */
+.notif-item.is-unread .notif-title { color: var(--text-primary); }
+.notif-item.is-unread { box-shadow: var(--shadow-card), inset 0 0 0 1.5px var(--brand-gradient-soft); }

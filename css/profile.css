@@ -1,0 +1,329 @@
+/* ============================================================
+   译境 TransVerse — 记录页徽标 / 详情抽屉 / 我的页 / 确认弹窗
+   （第五阶段：分段 Tab、设置子页、转写详情已拆分到
+     css/records.css 与 css/settings.css，本文件只保留共用零件）
+   沿用 Design System tokens
+   ============================================================ */
+
+/* ============================================================
+   记录页
+   ============================================================ */
+.history-page { padding-top: calc(var(--safe-top) + 14px); }
+
+/* 记录 / 筛选的通用样式见 css/records.css（第五阶段重构为三 Tab 分段控件） */
+
+.hist-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-footnote);
+  font-weight: 700;
+}
+.hist-badge-text        { background: var(--bg-icon-tint); color: var(--primary); }
+.hist-badge-photo       { background: var(--bg-icon-tint); color: var(--primary); }
+.hist-badge-interpreter { background: rgba(163, 154, 168, 0.14); color: var(--secondary); }
+.hist-badge-transcribe  { background: rgba(135, 156, 135, 0.14); color: var(--success); }
+.hist-badge-summary     { background: rgba(172, 156, 124, 0.14); color: var(--warning); }
+.hist-badge-favorites   { background: rgba(179, 165, 131, 0.14); color: var(--star); }
+
+.hist-time {
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+}
+
+/* 空状态骨架（.empty-state / .empty-title / .empty-sub 见 css/records.css） */
+
+/* ---------- 详情抽屉 ---------- */
+.detail-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+  z-index: 80;
+}
+.detail-mask.is-show { opacity: 1; pointer-events: auto; }
+
+.detail-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  max-height: 82dvh;
+  overflow-y: auto;
+  background: var(--bg-page);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  transition: transform var(--dur-base) var(--ease-out);
+  z-index: 90;
+  box-shadow: 0 -8px 40px rgba(31, 41, 90, 0.18);
+}
+.detail-sheet.is-open { transform: translate(-50%, 0); }
+
+.detail-sheet-inner {
+  padding: 8px var(--page-pad) calc(var(--safe-bottom) + 20px);
+}
+.detail-grip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--divider);
+  margin: 8px auto 14px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.detail-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-xs);
+}
+.detail-close:active { transform: scale(0.9); }
+
+.detail-time {
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.detail-body { display: flex; flex-direction: column; gap: 14px; }
+
+.detail-tone {
+  font-size: var(--fs-footnote);
+  color: var(--brand-purple);
+  font-weight: 600;
+  margin-top: -6px;
+}
+
+.detail-block {
+  padding: 12px 14px;
+  border-radius: var(--radius-s);
+  background: var(--bg-card);
+}
+.detail-block-label {
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.detail-block-text {
+  font-size: var(--fs-body-l);
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.detail-photo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-photo-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  background: var(--bg-card);
+}
+.dp-src { font-size: var(--fs-body); color: var(--text-secondary); font-weight: 600; }
+.dp-arrow { color: var(--text-tertiary); }
+.dp-dst { font-size: var(--fs-body-l); color: var(--text-primary); font-weight: 700; }
+
+.detail-sub {
+  font-size: var(--fs-footnote);
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+.detail-highlights, .detail-todos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.detail-highlights li {
+  padding: 9px 12px;
+  border-radius: var(--radius-s);
+  background: var(--brand-gradient-soft);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+.detail-todos li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--radius-s);
+  background: var(--bg-card);
+  font-size: var(--fs-body);
+}
+.detail-todos li.is-done { text-decoration: line-through; color: var(--text-tertiary); }
+.todo-mark { color: var(--brand-blue); font-weight: 700; }
+
+/* ============================================================
+   设置页
+   ============================================================ */
+.profile-page { padding-top: calc(var(--safe-top) + 14px); }
+
+/* 用户卡 */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.user-avatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-gradient-strong);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: var(--shadow-brand);
+}
+.user-info { flex: 1; }
+.user-name { font-size: var(--fs-headline); font-weight: 750; }
+.user-sub {
+  margin-top: 4px;
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+}
+
+/* 设置分组 */
+.setting-group {
+  margin: 16px var(--page-pad) 0;
+  padding: 14px;
+  border-radius: var(--radius-l);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+.group-title {
+  font-size: var(--fs-footnote);
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--divider);
+}
+.setting-row:last-child { border-bottom: none; }
+
+.setting-label {
+  font-size: var(--fs-body-l);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.setting-value {
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+}
+.setting-arrow { color: var(--text-tertiary); display: grid; place-items: center; }
+
+.row-btn {
+  width: 100%;
+  text-align: left;
+  transition: opacity var(--dur-fast);
+}
+.row-btn:active { opacity: 0.6; }
+.row-btn.danger .setting-label { color: var(--danger); }
+.row-btn.danger .setting-arrow { color: var(--danger); }
+
+/* 主题选项与语气选择已迁至「设置 → 外观 / 翻译设置」子页，见 css/settings.css */
+
+.footer-tip {
+  text-align: center;
+  margin: 28px 0 10px;
+  font-size: var(--fs-footnote);
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+}
+
+/* ---------- 确认弹窗 ---------- */
+.confirm-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+  z-index: 110;
+  padding: 0 40px;
+}
+.confirm-mask.is-show { opacity: 1; pointer-events: auto; }
+
+.confirm-dialog {
+  width: 100%;
+  max-width: 320px;
+  padding: 22px;
+  border-radius: var(--radius-l);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-float);
+  transform: scale(0.9);
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+.confirm-mask.is-show .confirm-dialog { transform: scale(1); }
+
+.confirm-title {
+  font-size: var(--fs-title);
+  font-weight: 750;
+  text-align: center;
+}
+.confirm-msg {
+  margin-top: 10px;
+  font-size: var(--fs-body);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  text-align: center;
+}
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.confirm-btn {
+  flex: 1;
+  padding: 11px;
+  border-radius: var(--radius-m);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  transition: transform var(--dur-fast), opacity var(--dur-fast);
+}
+.confirm-btn:active { transform: scale(0.96); }
+.confirm-cancel {
+  background: var(--bg-page);
+  color: var(--text-secondary);
+}
+.confirm-ok {
+  background: var(--danger);
+  color: #fff;
+}

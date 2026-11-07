@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#F3F0EC" />
+  <meta name="description" content="译境 TransVerse — 听懂世界，自由表达" />
+  <title>译境 TransVerse</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C8F9F'/%3E%3Ctext x='16' y='22' font-size='16' font-weight='bold' text-anchor='middle' fill='white' font-family='sans-serif'%3E译%3C/text%3E%3C/svg%3E" />
+  <script>
+    /* 首屏引导：在样式表生效前确定 <html data-theme> 与 data-font，
+       避免深浅色切换时的闪白，也让「跟随系统」与「手动选择」都不需要
+       在 CSS 里重复写两套深色变量。口径与 js/data/settings.js 保持一致。 */
+    (function () {
+      var root = document.documentElement;
+      var theme = 'light';
+      var font = 'standard';
+      try {
+        var saved = localStorage.getItem('transverse_theme_v1');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        } else {
+          theme = (window.matchMedia
+            && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        var f = localStorage.getItem('transverse_font_size_v1');
+        if (f === 'small' || f === 'standard' || f === 'large') font = f;
+      } catch (e) { /* 隐私模式等存储不可用时退回默认值 */ }
+      /* 演示/验收用：?theme=light|dark 可强制指定主题，优先级最高 */
+      try {
+        var q = new URLSearchParams(location.search).get('theme');
+        if (q === 'light' || q === 'dark') theme = q;
+      } catch (e) { /* ignore */ }
+      root.setAttribute('data-theme', theme);
+      root.setAttribute('data-font', font);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', theme === 'dark' ? '#232830' : '#F3F0EC');
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/translate.css" />
+  <link rel="stylesheet" href="css/realtime.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="stylesheet" href="css/dialogue.css" />
+  <link rel="stylesheet" href="css/records.css" />
+  <link rel="stylesheet" href="css/settings.css" />
+  <link rel="stylesheet" href="css/notifications.css" />
+</head>
+<body>
+  <div id="app" class="app-shell"></div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
