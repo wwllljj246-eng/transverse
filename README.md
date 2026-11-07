@@ -22,7 +22,7 @@
 | 版本 | 地址 | 说明 |
 | --- | --- | --- |
 | 🌐 GitHub Pages | https://wwllljj246-eng.github.io/transverse/ | 推荐分享；静态前端 + 跨域调用下方后端，真实翻译可用 |
-| ⚙️ CloudStudio 完整版 | https://e36145bc87da40faa42fbb52ad4d8e43.codebuddy.cloudstudio.run | 前端与 Express 后端同源，含拍照 OCR 接口 |
+| ⚙️ CloudStudio 完整版 | https://098ea8074006440498475abc65f7bc11.codebuddy.cloudstudio.run | 前端与 Express 后端同源，含拍照 OCR 接口 |
 
 > GitHub Pages 是纯静态托管，本身跑不了后端；页面会自动把翻译请求发到带 HTTPS 的后端代理。若后端休眠或公共翻译额度用尽，会提示「翻译服务不可用，当前使用演示翻译」并降级，不会把假译文当作真实结果。
 

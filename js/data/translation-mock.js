@@ -10,7 +10,7 @@
    - 也可在页面里设置 window.TRANSVERSE_API_BASE 覆盖（自行部署后端时用）
    ============================================================ */
 
-const REMOTE_API_BASE = 'https://e36145bc87da40faa42fbb52ad4d8e43.codebuddy.cloudstudio.run';
+const REMOTE_API_BASE = 'https://098ea8074006440498475abc65f7bc11.codebuddy.cloudstudio.run';
 
 function translateEndpoint(path) {
   const custom = typeof window !== 'undefined' ? window.TRANSVERSE_API_BASE : '';
